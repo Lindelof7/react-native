@@ -1,6 +1,22 @@
+import { useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, Image } from "react-native";
 
+const initialState = {
+    login: "",
+    email: "",
+    password: ""
+}
+
 export default function RegistrationScreen() {
+
+    const [state, setstate] = useState(initialState)
+
+
+    const submit = () => {
+        console.log(state);
+        setstate(initialState);
+    }
+
     return (
         <ImageBackground source={require("../assets/images/RegScreenBG.jpg")} style={styles.imgBg}>
             <KeyboardAvoidingView
@@ -10,16 +26,15 @@ export default function RegistrationScreen() {
                 keyboardVerticalOffset={200}
             >
                 <View style={styles.textWrap}>
-
                     <Image style={styles.avatar} source={require("../assets/images/RegisterAvatar.jpg")}></Image>
-                    <Text style={{ color: "#fff", fontSize: 30, color: '#212121', marginBottom: 33, marginLeft: 'auto', marginRight: 'auto' }}>Реєстрація</Text>
+                    <Text style={{ color: "#fff", fontSize: 30, color: '#212121', marginBottom: 33, marginLeft: 'auto', marginRight: 'auto', fontWeight: 500, }}>Реєстрація</Text>
                     <View style={{ gap: 33 }}>
-                        <TextInput style={styles.input} placeholder="Логін"></TextInput>
-                        <TextInput style={styles.input} placeholder="Адреса електронної пошти"></TextInput>
-                        <TextInput style={styles.input} secureTextEntry={true} placeholder="Пароль"></TextInput>
+                        <TextInput value={state.login} onChangeText={(value) => setstate((prevState) => ({ ...prevState, login: value }))} style={styles.input} placeholder="Логін"></TextInput>
+                        <TextInput value={state.email} onChangeText={(value) => setstate((prevState) => ({ ...prevState, email: value }))} style={styles.input} placeholder="Адреса електронної пошти" ></TextInput>
+                        <TextInput value={state.password} onChangeText={(value) => setstate((prevState) => ({ ...prevState, password: value }))} style={styles.input} secureTextEntry={true} placeholder="Пароль"></TextInput>
                     </View>
 
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={submit}>
                         <Text style={styles.btnTitle}>Зареєструватись</Text>
                     </TouchableOpacity>
                     <Text style={styles.logInText}>Вже є аккаунт? Увійти</Text>
